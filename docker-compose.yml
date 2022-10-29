@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  orai:
+    container_name: bsec
+    image: continuumio/anaconda3
+    working_dir: /workspace
+    tty: true
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - SYS_PTRACE
+    env_file:
+      - .env
+    volumes:
+      - ./:/workspace

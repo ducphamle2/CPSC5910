@@ -1,0 +1,4 @@
+SELECT * FROM polygon.transactions WHERE from_address='0x3c286c825a5787ff4ebb9bbaaec37f2b986c8961'
+SELECT COUNT(1) AS C FROM polygon.transactions WHERE from_address='0x3c286c825a5787ff4ebb9bbaaec37f2b986c8961'
+SELECT * FROM polygon.transactions WHERE input like '%0x095ea7b3%' and from_address='0x3c286c825a5787ff4ebb9bbaaec37f2b986c8961'
+

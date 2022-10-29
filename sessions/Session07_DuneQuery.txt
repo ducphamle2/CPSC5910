@@ -1,0 +1,6 @@
+-- selects approvals of weth tokens and counts distrinct transactions per day
+SELECT date_trunc('day', evt_block_time) as “Date”, COUNT(DISTINCT evt_tx_hash) AS ApprovalCount
+FROM erc20."ERC20_evt_Approval"
+WHERE evt_block_time > now() - interval '60 days' AND contract_address='\xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+GROUP BY 1
+ORDER BY 1 
