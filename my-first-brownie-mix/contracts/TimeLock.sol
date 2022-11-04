@@ -1,4 +1,5 @@
-pragma solidity =0.8.10;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.7.0 <0.9.0;
 
 contract TimeLock {
     struct Lock {
@@ -13,8 +14,11 @@ contract TimeLock {
 
     function deposit(uint64 timelock) external payable {
         // can only deposit when has withdrawn / no lock
-        require(funds[msg.sender].amount == 0);
-        require(msg.value > 0);
+        require(
+            funds[msg.sender].amount == 0,
+            "Lock amount should be empty before depositing"
+        );
+        require(msg.value > 0, "Eth amount deposited must be greater than 0");
 
         uint256 timelock256 = uint256(timelock);
 
@@ -26,8 +30,14 @@ contract TimeLock {
     }
 
     function withdraw() external {
-        require(funds[msg.sender].lockBlock <= block.number);
-        require(funds[msg.sender].amount != 0);
+        require(
+            funds[msg.sender].lockBlock <= block.number,
+            "Current block height must be greater or equal to the lock block"
+        );
+        require(
+            funds[msg.sender].amount != 0,
+            "Lock amount must be greater than 0 to withdraw eth"
+        );
 
         // temp value to send eth after reset funds
         uint256 amount = funds[msg.sender].amount;
