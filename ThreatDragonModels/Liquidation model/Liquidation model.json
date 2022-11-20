@@ -419,7 +419,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "7. Y asset C",
+                      "text": "Y asset C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -457,7 +457,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "9. Y Asset C",
+                      "text": "Y' Asset C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
