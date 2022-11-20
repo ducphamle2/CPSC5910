@@ -10,6 +10,13 @@
         "name": "ducphamle2"
       }
     ],
-    "diagrams": []
+    "diagrams": [
+      {
+        "title": "Liquidation diagram",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0
+      }
+    ]
   }
 }
