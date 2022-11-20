@@ -37,7 +37,7 @@
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "Liquiditor A"
+                  "text": "Liquidator A"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
@@ -98,7 +98,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "X Repay Asset",
+                      "text": "1. X Repay Asset",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -189,7 +189,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Price of C",
+                      "text": "4.1 Price of C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -214,8 +214,8 @@
                 "height": 80
               },
               "position": {
-                "x": 528,
-                "y": 12
+                "x": 605,
+                "y": 13
               },
               "angle": 0,
               "id": "921a7618-eb17-448c-a11a-9417b2d798f1",
@@ -261,7 +261,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "Y asset C",
+                      "text": "3. Y asset C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -299,7 +299,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Liquidation Threshold",
+                      "text": "4. 2 Liquidation\nThreshold",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -308,53 +308,6 @@
               ],
               "z": 11,
               "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              }
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "82e77012-b97f-4d08-af08-6a1d62dcca82"
-              },
-              "target": {
-                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
-              },
-              "vertices": [
-                {
-                  "x": 543,
-                  "y": 317
-                }
-              ],
-              "id": "097536e5-d17c-462a-a5a3-2244403662b7",
-              "labels": [
-                {
-                  "position": {
-                    "distance": 0.4764990821061722,
-                    "offset": 25.03833022407089
-                  },
-                  "attrs": {
-                    "text": {
-                      "text": "Liquidatable",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "z": 13,
-              "hasOpenThreats": false,
-              "description": "A boolean value showing that the collateral should be liquidated",
               "attrs": {
                 ".marker-target": {
                   "class": "marker-target hasNoOpenThreats isInScope"
@@ -415,7 +368,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Y asset C",
+                      "text": "2. Y asset C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -458,7 +411,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Y' Asset C",
+                      "text": "8. Y Asset C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -483,19 +436,20 @@
                 "height": 100
               },
               "position": {
-                "x": 603,
-                "y": 422
+                "x": 605,
+                "y": 399
               },
               "angle": 0,
               "id": "e993771b-88ce-4145-881f-60e5548a6aa1",
               "z": 17,
               "hasOpenThreats": false,
+              "description": "The comparison process is to make sure Liquidator pays the right amount",
               "attrs": {
                 ".element-shape": {
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "Calculates Y'\nAsset C"
+                  "text": "Compares X\nwith Y"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
@@ -519,10 +473,13 @@
               "id": "264a2d5e-293e-4fd1-8f03-8fefe0978c79",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.6514511172074768,
+                    "offset": 10.231051077988294
+                  },
                   "attrs": {
                     "text": {
-                      "text": "Price of X and C",
+                      "text": "6. Price of Repay\nAsset and C",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -555,8 +512,8 @@
               },
               "vertices": [
                 {
-                  "x": 526,
-                  "y": 374
+                  "x": 557,
+                  "y": 380
                 }
               ],
               "id": "d9eaf6aa-e190-4941-b946-d8cf6136552d",
@@ -568,7 +525,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "Y and X",
+                      "text": "5. Y and X",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -619,17 +576,17 @@
               },
               "smooth": true,
               "source": {
-                "x": 478,
-                "y": 65
+                "x": 556,
+                "y": 56
               },
               "target": {
-                "x": 739,
-                "y": 67
+                "x": 807,
+                "y": 61
               },
               "vertices": [
                 {
-                  "x": 594,
-                  "y": 137
+                  "x": 685,
+                  "y": 134
                 }
               ],
               "id": "95b8161a-1215-44c1-974c-efa626026774",
@@ -666,6 +623,32 @@
               "attrs": {}
             },
             {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 298,
+                "y": 478
+              },
+              "angle": 0,
+              "id": "408a831c-35ac-4c2f-a00c-c2b8f501bdb5",
+              "z": 24,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Liquidity Provider A"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
               "type": "tm.Flow",
               "size": {
                 "width": 10,
@@ -673,31 +656,26 @@
               },
               "smooth": true,
               "source": {
-                "id": "e993771b-88ce-4145-881f-60e5548a6aa1"
-              },
-              "target": {
                 "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
               },
-              "vertices": [
-                {
-                  "x": 463,
-                  "y": 424
-                }
-              ],
-              "id": "2e0de33c-6f87-4ef7-a782-6784e724f09d",
+              "target": {
+                "id": "408a831c-35ac-4c2f-a00c-c2b8f501bdb5"
+              },
+              "vertices": [],
+              "id": "2723236e-190c-4e91-9b77-a5eb7222025b",
               "labels": [
                 {
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Y'",
+                      "text": "7. X Repay Asset",
                       "font-weight": "400",
                       "font-size": "small"
                     }
                   }
                 }
               ],
-              "z": 23,
+              "z": 25,
               "hasOpenThreats": false,
               "attrs": {
                 ".marker-target": {
@@ -707,6 +685,31 @@
                   "class": "connection hasNoOpenThreats isInScope"
                 }
               }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 534,
+                "y": 536
+              },
+              "target": {
+                "x": 202,
+                "y": 538
+              },
+              "vertices": [
+                {
+                  "x": 380,
+                  "y": 408
+                }
+              ],
+              "id": "fb79b6c8-1556-4e79-8621-46d1e7775ca1",
+              "z": 26,
+              "attrs": {}
             }
           ]
         },
