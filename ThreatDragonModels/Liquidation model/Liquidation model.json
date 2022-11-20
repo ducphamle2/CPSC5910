@@ -1,0 +1,15 @@
+{
+  "summary": {
+    "title": "Liquidation model",
+    "owner": "Le Duc Pham",
+    "description": "Create a threat model for the liquidation flow of the Spook protocol. A liquidation happens when the collateral value falls below a particular threshold as a percentage of the borrowed assets. E.g. lets assume the collateral requirement is 110%. If you borrow $100K and deposit 100 ETH as collateral (current value of approx $120K), the ETH needs to have at least a value of $110K. Once the value falls below $110K, the position gets liquidated (aka sold) and the user can keep the borrowed asset. In the process, a user would loose $10K."
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "ducphamle2"
+      }
+    ],
+    "diagrams": []
+  }
+}
