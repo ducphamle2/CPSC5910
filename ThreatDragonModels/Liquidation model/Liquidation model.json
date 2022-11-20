@@ -554,8 +554,8 @@
               },
               "vertices": [
                 {
-                  "x": 498,
-                  "y": 395
+                  "x": 434,
+                  "y": 439
                 }
               ],
               "id": "d9eaf6aa-e190-4941-b946-d8cf6136552d",
@@ -567,7 +567,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "C and X",
+                      "text": "Y and X",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -663,6 +663,49 @@
               "id": "4300efc8-43ee-4492-9bc9-ba6bf2d54570",
               "z": 22,
               "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "e993771b-88ce-4145-881f-60e5548a6aa1"
+              },
+              "target": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "vertices": [
+                {
+                  "x": 499,
+                  "y": 389
+                }
+              ],
+              "id": "2e0de33c-6f87-4ef7-a782-6784e724f09d",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Y'",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 23,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
             }
           ]
         },
