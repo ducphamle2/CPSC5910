@@ -1,0 +1,723 @@
+{
+  "summary": {
+    "title": "Liquidation model",
+    "owner": "Le Duc Pham",
+    "description": "Create a threat model for the liquidation flow of the Spook protocol. A liquidation happens when the collateral value falls below a particular threshold as a percentage of the borrowed assets. E.g. lets assume the collateral requirement is 110%. If you borrow $100K and deposit 100 ETH as collateral (current value of approx $120K), the ETH needs to have at least a value of $110K. Once the value falls below $110K, the position gets liquidated (aka sold) and the user can keep the borrowed asset. In the process, a user would loose $10K."
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "ducphamle2"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Liquidation diagram",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 41,
+                "y": 90
+              },
+              "angle": 0,
+              "id": "6c84c39a-3c3f-429d-ae0a-1bde31ff0154",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Liquidator A"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 369,
+                "y": 228
+              },
+              "angle": 0,
+              "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4",
+              "z": 2,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Liquidate"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "6c84c39a-3c3f-429d-ae0a-1bde31ff0154"
+              },
+              "target": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "vertices": [
+                {
+                  "x": 266,
+                  "y": 192
+                }
+              ],
+              "id": "d4e54f8f-bb6f-42ee-85ba-e156133d2760",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5071108987472893,
+                    "offset": 6.876206245809404
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "1. X Repay Asset",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 3,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 620,
+                "y": 243
+              },
+              "angle": 0,
+              "id": "82e77012-b97f-4d08-af08-6a1d62dcca82",
+              "z": 4,
+              "hasOpenThreats": false,
+              "description": "",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Compares Y\nwith threshold"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 835,
+                "y": 238
+              },
+              "angle": 0,
+              "id": "53a3c02a-7ce8-4319-9883-f96437eba344",
+              "z": 5,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Oracle"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "53a3c02a-7ce8-4319-9883-f96437eba344"
+              },
+              "target": {
+                "id": "82e77012-b97f-4d08-af08-6a1d62dcca82"
+              },
+              "vertices": [],
+              "id": "d756d2ca-2287-4f46-ac86-c5ba623332a7",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "4.1 Price of C",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 6,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 605,
+                "y": 13
+              },
+              "angle": 0,
+              "id": "921a7618-eb17-448c-a11a-9417b2d798f1",
+              "z": 9,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Protocol Parameter\nStore"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "target": {
+                "id": "82e77012-b97f-4d08-af08-6a1d62dcca82"
+              },
+              "vertices": [
+                {
+                  "x": 558,
+                  "y": 255
+                }
+              ],
+              "id": "d3cc63a1-df7f-45ef-a962-94681e330040",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5960433425846955,
+                    "offset": -22.020749070865527
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "3. Y asset C",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 10,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "921a7618-eb17-448c-a11a-9417b2d798f1"
+              },
+              "target": {
+                "id": "82e77012-b97f-4d08-af08-6a1d62dcca82"
+              },
+              "vertices": [],
+              "id": "f0a6e963-6c52-42a6-b708-f9731f6eb1f8",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "4. 2 Liquidation\nThreshold",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 11,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 64,
+                "y": 365
+              },
+              "angle": 0,
+              "id": "fa850062-a250-4089-9b3f-9a9853f3cd2a",
+              "z": 14,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Asset C Collateralization\nPool"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fa850062-a250-4089-9b3f-9a9853f3cd2a"
+              },
+              "target": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "vertices": [
+                {
+                  "x": 262,
+                  "y": 321
+                }
+              ],
+              "id": "de12c167-df9d-4908-a047-5b1d06aa8931",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "2. Y asset C",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 15,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "target": {
+                "id": "6c84c39a-3c3f-429d-ae0a-1bde31ff0154"
+              },
+              "vertices": [
+                {
+                  "x": 213,
+                  "y": 232
+                }
+              ],
+              "id": "4f3856c8-c001-4f40-a686-fd46777f70e2",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "8. Y Asset C",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 16,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 605,
+                "y": 399
+              },
+              "angle": 0,
+              "id": "e993771b-88ce-4145-881f-60e5548a6aa1",
+              "z": 17,
+              "hasOpenThreats": false,
+              "description": "The comparison process is to make sure Liquidator pays the right amount",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Compares X\nwith Y"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "53a3c02a-7ce8-4319-9883-f96437eba344"
+              },
+              "target": {
+                "id": "e993771b-88ce-4145-881f-60e5548a6aa1"
+              },
+              "vertices": [],
+              "id": "264a2d5e-293e-4fd1-8f03-8fefe0978c79",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.6514511172074768,
+                    "offset": 10.231051077988294
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "6. Price of Repay\nAsset and C",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 18,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "target": {
+                "id": "e993771b-88ce-4145-881f-60e5548a6aa1"
+              },
+              "vertices": [
+                {
+                  "x": 557,
+                  "y": 380
+                }
+              ],
+              "id": "d9eaf6aa-e190-4941-b946-d8cf6136552d",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5954083654358523,
+                    "offset": -1.2678137839539472
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "5. Y and X",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 19,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 202,
+                "y": 27
+              },
+              "target": {
+                "x": 177,
+                "y": 501
+              },
+              "vertices": [
+                {
+                  "x": 335,
+                  "y": 257
+                }
+              ],
+              "id": "16cfd6cf-67e9-4630-bdd1-e14c2b0c2ff6",
+              "z": 20,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 556,
+                "y": 56
+              },
+              "target": {
+                "x": 807,
+                "y": 61
+              },
+              "vertices": [
+                {
+                  "x": 685,
+                  "y": 134
+                }
+              ],
+              "id": "95b8161a-1215-44c1-974c-efa626026774",
+              "z": 21,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 886,
+                "y": 157
+              },
+              "target": {
+                "x": 895,
+                "y": 404
+              },
+              "vertices": [
+                {
+                  "x": 762,
+                  "y": 293
+                },
+                {
+                  "x": 903,
+                  "y": 413
+                }
+              ],
+              "id": "4300efc8-43ee-4492-9bc9-ba6bf2d54570",
+              "z": 22,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 298,
+                "y": 478
+              },
+              "angle": 0,
+              "id": "408a831c-35ac-4c2f-a00c-c2b8f501bdb5",
+              "z": 24,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Liquidity Provider A"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d8493505-fbb1-4d59-90e5-c9fa2ac828f4"
+              },
+              "target": {
+                "id": "408a831c-35ac-4c2f-a00c-c2b8f501bdb5"
+              },
+              "vertices": [],
+              "id": "2723236e-190c-4e91-9b77-a5eb7222025b",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "7. X Repay Asset",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 25,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 534,
+                "y": 536
+              },
+              "target": {
+                "x": 202,
+                "y": 538
+              },
+              "vertices": [
+                {
+                  "x": 380,
+                  "y": 408
+                }
+              ],
+              "id": "fb79b6c8-1556-4e79-8621-46d1e7775ca1",
+              "z": 26,
+              "attrs": {}
+            }
+          ]
+        },
+        "size": {
+          "height": 698,
+          "width": 1063
+        }
+      }
+    ]
+  }
+}
