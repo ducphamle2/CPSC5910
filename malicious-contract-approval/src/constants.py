@@ -25,4 +25,7 @@ TORNADO_CASH_ADDRESSES = ["0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",  # Ether
                           "0xa5C2254e4253490C54cef0a4347fddb8f75A4998"  # POLYGON - 100000 MATIC
                           ]
 
+# raw signature: withdraw(address,bytes,bytes32,bytes32,address,address,uint256,uint256)
+TORNADO_WITHDRAW_METHOD_SIGNATURE = "0xb438689f"
+
 ERC_20_APPROVAL_EVENT_ABI = '{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}'

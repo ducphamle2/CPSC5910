@@ -18,6 +18,16 @@ class SuspiciousContractFindings:
         })
 
     @staticmethod
+    def suspicious_malicious_contract_tornado_cash_approvals_contract_is_owner(creator: str, contract_address: str, spender: str, erc20_token: str) -> Finding:
+        return Finding({
+            'name': 'Suspicious Contract created by Tornado Cash funded account with ERC20 token Approval as Owner',
+            'description': f'contract {contract_address} with creator {creator} funded by Tornado Cash approved {spender} to spend ERC20 token with address: {erc20_token}',
+            'alert_id': 'SUSPICIOUS-CONTRACT-APPROVAL-TORNADO-CASH',
+            'type': FindingType.Suspicious,
+            'severity': FindingSeverity.High,
+        })
+
+    @staticmethod
     def suspicious_malicious_account_tornado_cash_approvals(creator: str, erc20_token: str) -> Finding:
         return Finding({
             'name': 'Suspicious Tornado Cash funded account ERC20 token Approval',
