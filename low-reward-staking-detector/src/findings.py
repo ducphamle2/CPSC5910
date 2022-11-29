@@ -15,3 +15,14 @@ class SuspiciousContractFindings:
             'severity': FindingSeverity.Info,
             'protocol': 'polygon'
         })
+
+    @staticmethod
+    def rewarder_forta_unexpected_transfer(amount: str, to: str) -> Finding:
+        return Finding({
+            'name': 'Unexpected transfer Event From The Rewarder Address',
+            'description': f'The Rewarder {REWARDER_ADDRESS} Has An Unexpected transfer Event that is not originated from the Unstake Event. The total amount transferred out is: {amount} FT, and it is sent to {to}',
+            'alert_id': 'REWARDER_ERC20_BALANCE_UNEXPECTED_TRANSFER',
+            'type': FindingType.Suspicious,
+            'severity': FindingSeverity.High,
+            'protocol': 'polygon'
+        })

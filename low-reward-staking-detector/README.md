@@ -15,6 +15,11 @@ This detection bot detects when the ERC20 balance of a reward token from a rewar
   - Finding type: Info
   - Finding severity: Info
 
+- REWARDER_ERC20_BALANCE_UNEXPECTED_TRANSFER
+  - Fired when there is an unexpected transfer from the Rewarder address to other addresses that is not originated from the Unstake event.
+  - Finding type: Suspicious
+  - Finding severity: High
+
 ## Test Data
 
 The agent behaviour can be verified with the following transactions sequentially:

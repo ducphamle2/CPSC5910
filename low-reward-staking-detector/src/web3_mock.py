@@ -26,5 +26,7 @@ class FunctionsMock:
         self.return_value = 10000
         return self
 
-    def call(self, *_, **__):
-        return self.return_value
+    def call(self, block_identifier=None, *_, **__):
+        if block_identifier == 1:
+            return self.return_value
+        return self.return_value + 1

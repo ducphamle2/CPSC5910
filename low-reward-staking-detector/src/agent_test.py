@@ -22,11 +22,25 @@ class TestSuspiciousContractAgent:
     def test_get_rewarder_erc20_balance(self):
         transaction_event = create_transaction_event({
             'block': {
-                'number': 0
+                'number': 1
             }}
         )
         agent.get_rewarder_erc20_balance(w3,transaction_event)
         assert agent.REWARDER_TOTAL_ERC20_BALANCE == 10000
+
+        # when the same block number, we wont continue querying
+        agent.get_rewarder_erc20_balance(w3,transaction_event)
+        assert agent.REWARDER_TOTAL_ERC20_BALANCE == 10000
+
+        # when different block number, we will again try querying
+        transaction_event = create_transaction_event({
+            'block': {
+                'number': 2
+            }}
+        )
+        agent.get_rewarder_erc20_balance(w3,transaction_event)
+        assert agent.REWARDER_TOTAL_ERC20_BALANCE == 10001
+
     
     def test_increase_rewarder_erc20_balance(self):
         # first case, 'from' is non-zero => dont increase balance of rewarder
@@ -46,18 +60,7 @@ class TestSuspiciousContractAgent:
 
         assert agent.REWARDER_TOTAL_ERC20_BALANCE, 0
 
-        # second case, zero address but mint to other addresses
-        mock_mint_event = {
-            'args': {'from': ZERO_ADDRESS, 'to': STAKER_ADDRESS, 'value': 1}}
-
-        tx_event.filter_log = Mock()
-        tx_event.filter_log.return_value = [mock_mint_event]
-
-        agent.increase_rewarder_erc20_balance(w3, tx_event)
-
-        assert agent.REWARDER_TOTAL_ERC20_BALANCE, 0
-
-        # third case, success
+        # second case, success
         mock_mint_event = {
             'args': {'from': ZERO_ADDRESS, 'to': REWARDER_ADDRESS, 'value': 1}}
 
@@ -125,3 +128,29 @@ class TestSuspiciousContractAgent:
         findings = agent.notify_rewarder_erc20_balance_below_threshold(w3, tx_event)
 
         assert len(findings) == 1
+
+    def test_unexpected_FT_token_rewarder_transfer(self):
+        # first case, wrong event or from is not REWARDER ADDRESS => will not return any findings
+        tx_event = create_transaction_event({
+            'block': {
+                'number': 0
+            },
+            'logs': [
+                {
+                    'address': STAKING_CONTRACT_ADDRESS,
+                    STAKING_CONTRACT_ADDRESS: True
+                }
+            ]
+        })
+        mock_unstake_event = {
+            'args': {'_address': STAKER_ADDRESS, 'amount': 1}}
+
+        mock_transfer_event = {
+            'args': {'from': STAKER_ADDRESS, 'to': REWARDER_ADDRESS, 'value': 1}}
+
+        tx_event.filter_log = Mock()
+        tx_event.filter_log.return_value = [mock_unstake_event,mock_transfer_event]
+
+        findings = agent.unexpected_transfer_rewarder(w3, tx_event)
+
+        assert len(findings) == 0
