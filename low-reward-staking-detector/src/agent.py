@@ -68,7 +68,6 @@ def increase_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.tra
     global REWARDER_TOTAL_ERC20_BALANCE
 
     # get mint function then collect the amount to increase the rewarder total balance
-    print("transaction event data: ", transaction_event.transaction.data)
     events = transaction_event.filter_log(TRANSFER_EVENT_ABI, FAKE_FORTA_ERC20_ADDRESS)
     
     for event in events:
@@ -113,7 +112,7 @@ def unexpected_transfer_rewarder(w3: Web3, transaction_event: forta_agent.transa
 
     unexpected_transfer_events = transaction_event.filter_log(TRANSFER_EVENT_ABI, STAKING_CONTRACT_ADDRESS)
     if len(unexpected_transfer_events) == 0:
-        return
+        return findings
     for transfer_event in unexpected_transfer_events:
 
         if 'from' not in transfer_event['args'] or 'to' not in transfer_event['args']:
