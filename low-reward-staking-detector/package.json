@@ -1,6 +1,6 @@
 {
   "name": "low-reward-staking-detector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Detection bot that triggers when a rewarder's ERC20 token falls below a threshold",
   "chainIds": [
     1,
