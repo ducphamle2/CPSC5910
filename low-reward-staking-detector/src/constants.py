@@ -16,5 +16,5 @@ REWARD_BALANCE_THRESHOLD = 9999900
 
 ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-# re-fire the event after 500 blocks if the balance is still below the threshold
-ALERT_BLOCK_INTERVAL_CONSTANT = 500
+# re-fire the event after 5000 blocks if the balance is still below the threshold
+ALERT_BLOCK_INTERVAL_CONSTANT = 5000

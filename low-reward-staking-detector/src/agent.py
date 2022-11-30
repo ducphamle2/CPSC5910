@@ -78,7 +78,6 @@ def increase_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.tra
     events = transaction_event.filter_log(TRANSFER_EVENT_ABI, FAKE_FORTA_ERC20_ADDRESS)
     
     for event in events:
-        print("event: ", event['args'])
         if 'from' not in event['args'] or 'to' not in event['args']:
             continue
         if event['args']['to'] != REWARDER_ADDRESS:
@@ -96,46 +95,24 @@ def decrease_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.tra
 
     unstake_events = transaction_event.filter_log(UNSTAKE_EVENT_ABI, STAKING_CONTRACT_ADDRESS)
     if len(unstake_events) == 0:
-        return
+        return []
     for unstake_event in unstake_events:
 
         if 'amount' not in unstake_event['args']:
             continue
 
         amount = unstake_event['args']['amount']
-        print("amount: ", amount)
+        print("unstake amount: ", amount)
 
         REWARDER_TOTAL_ERC20_BALANCE -= amount
-
-def unexpected_transfer_rewarder(w3: Web3, transaction_event: forta_agent.transaction_event.TransactionEvent) -> list:
-
-    """
-    This function is a safeguard that fire alerts if there are events that transfer FT tokens from the Rewarder address that do not originate from the Unstake event
-    """
-
-    global REWARDER_TOTAL_ERC20_BALANCE
-
-    findings = []
-
-    unexpected_transfer_events = transaction_event.filter_log(TRANSFER_EVENT_ABI, FAKE_FORTA_ERC20_ADDRESS)
-    if len(unexpected_transfer_events) == 0:
-        return findings
-    for transfer_event in unexpected_transfer_events:
-
-        if 'from' not in transfer_event['args'] or 'to' not in transfer_event['args']:
-            continue
-        if transfer_event['args']['from'] != REWARDER_ADDRESS:
-            continue
-        
-        value = transfer_event['args']['value']
-        REWARDER_TOTAL_ERC20_BALANCE -= value
-        findings.append(SuspiciousContractFindings.rewarder_forta_unexpected_transfer(f'{value} FT', transfer_event['args']['to']))
     
-    return findings
+    return unstake_events
 
 def count_alert_interval(transaction_event: forta_agent.transaction_event.TransactionEvent) -> bool:
     global ALERT_BLOCK_INTERVAL
     global CURRENT_HANDLING_BLOCK_NUMBER
+
+    print("current alert block interval: ", ALERT_BLOCK_INTERVAL)
 
     if CURRENT_HANDLING_BLOCK_NUMBER == transaction_event.block.number:
         return False
@@ -161,13 +138,14 @@ def notify_rewarder_erc20_balance_below_threshold(w3: Web3, transaction_event: f
 
     global REWARDER_TOTAL_ERC20_BALANCE
 
+    findings = []
+
     increase_rewarder_erc20_balance(w3, transaction_event)
     decrease_rewarder_erc20_balance(w3, transaction_event)
 
-    findings = unexpected_transfer_rewarder(w3, transaction_event)
-
     if REWARDER_TOTAL_ERC20_BALANCE < REWARD_BALANCE_THRESHOLD:
         low_balance_should_alert = count_alert_interval(transaction_event)
+        print("low balance should restart: ", low_balance_should_alert)
         if low_balance_should_alert is True:
             findings.append(SuspiciousContractFindings.rewarder_forta_erc20_balance_drop_below_threshold(f'{REWARDER_TOTAL_ERC20_BALANCE} FT'))
     return findings

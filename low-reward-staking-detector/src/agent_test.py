@@ -180,31 +180,3 @@ class TestSuspiciousContractAgent:
         findings = agent.notify_rewarder_erc20_balance_below_threshold(w3, tx_event)
 
         assert len(findings) == 1
-
-    def test_unexpected_FT_token_rewarder_transfer(self):
-        agent.initialize()
-        # first case, wrong event or from is not REWARDER ADDRESS => will not return any findings
-
-        tx_event = create_transaction_event({
-            'block': {
-                'number': 0
-            },
-            'logs': [
-                {
-                    'address': STAKING_CONTRACT_ADDRESS,
-                    STAKING_CONTRACT_ADDRESS: True
-                }
-            ]
-        })
-        mock_unstake_event = {
-            'args': {'_address': STAKER_ADDRESS, 'amount': 1}}
-
-        mock_transfer_event = {
-            'args': {'from': STAKER_ADDRESS, 'to': REWARDER_ADDRESS, 'value': 1}}
-
-        tx_event.filter_log = Mock()
-        tx_event.filter_log.return_value = [mock_unstake_event,mock_transfer_event]
-
-        findings = agent.unexpected_transfer_rewarder(w3, tx_event)
-
-        assert len(findings) == 0
