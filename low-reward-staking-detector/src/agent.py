@@ -113,11 +113,11 @@ def count_alert_interval(transaction_event: forta_agent.transaction_event.Transa
     global CURRENT_HANDLING_BLOCK_NUMBER
 
     print("current alert block interval: ", ALERT_BLOCK_INTERVAL)
+    print("current handling block number: ", CURRENT_HANDLING_BLOCK_NUMBER)
+    print("transaction event block number: ", transaction_event.block.number)
 
     if CURRENT_HANDLING_BLOCK_NUMBER == transaction_event.block.number:
         return False
-
-    CURRENT_HANDLING_BLOCK_NUMBER = transaction_event.block.number
 
     if ALERT_BLOCK_INTERVAL == 0:
         ALERT_BLOCK_INTERVAL += 1
@@ -137,6 +137,7 @@ def notify_rewarder_erc20_balance_below_threshold(w3: Web3, transaction_event: f
     """
 
     global REWARDER_TOTAL_ERC20_BALANCE
+    global CURRENT_HANDLING_BLOCK_NUMBER
 
     findings = []
 
@@ -148,6 +149,10 @@ def notify_rewarder_erc20_balance_below_threshold(w3: Web3, transaction_event: f
         print("low balance should restart: ", low_balance_should_alert)
         if low_balance_should_alert is True:
             findings.append(SuspiciousContractFindings.rewarder_forta_erc20_balance_drop_below_threshold(f'{REWARDER_TOTAL_ERC20_BALANCE} FT'))
+
+    # reset current handling block number to the latest block after processing everything
+    if CURRENT_HANDLING_BLOCK_NUMBER != transaction_event.block.number:
+         CURRENT_HANDLING_BLOCK_NUMBER = transaction_event.block.number
     return findings
 
 
