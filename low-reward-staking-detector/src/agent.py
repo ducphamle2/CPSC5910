@@ -117,7 +117,7 @@ def unexpected_transfer_rewarder(w3: Web3, transaction_event: forta_agent.transa
 
     findings = []
 
-    unexpected_transfer_events = transaction_event.filter_log(TRANSFER_EVENT_ABI, STAKING_CONTRACT_ADDRESS)
+    unexpected_transfer_events = transaction_event.filter_log(TRANSFER_EVENT_ABI, FAKE_FORTA_ERC20_ADDRESS)
     if len(unexpected_transfer_events) == 0:
         return findings
     for transfer_event in unexpected_transfer_events:
