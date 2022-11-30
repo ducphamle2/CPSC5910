@@ -85,13 +85,15 @@ def increase_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.tra
         # a correct transfer event to increase the balance of the rewarder address
         REWARDER_TOTAL_ERC20_BALANCE += event['args']['value']
 
-def decrease_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.transaction_event.TransactionEvent):
+def decrease_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.transaction_event.TransactionEvent) -> list:
 
     """
     this function parses the Unstake Event that transfer FT tokens from Rewarder address to other addresses in a form of unstaking
     """
 
     global REWARDER_TOTAL_ERC20_BALANCE
+
+    findings = []
 
     unstake_events = transaction_event.filter_log(UNSTAKE_EVENT_ABI, STAKING_CONTRACT_ADDRESS)
     if len(unstake_events) == 0:
@@ -105,8 +107,10 @@ def decrease_rewarder_erc20_balance(w3: Web3, transaction_event: forta_agent.tra
         print("unstake amount: ", amount)
 
         REWARDER_TOTAL_ERC20_BALANCE -= amount
+
+        findings.append(SuspiciousContractFindings.rewarder_forta_erc20_balance_drop_below_threshold(f'{REWARDER_TOTAL_ERC20_BALANCE} FT'))
     
-    return unstake_events
+    return findings
 
 def count_alert_interval(transaction_event: forta_agent.transaction_event.TransactionEvent) -> bool:
     global ALERT_BLOCK_INTERVAL
@@ -142,13 +146,17 @@ def notify_rewarder_erc20_balance_below_threshold(w3: Web3, transaction_event: f
     findings = []
 
     increase_rewarder_erc20_balance(w3, transaction_event)
-    decrease_rewarder_erc20_balance(w3, transaction_event)
+    unstake_findings = decrease_rewarder_erc20_balance(w3, transaction_event)
 
     if REWARDER_TOTAL_ERC20_BALANCE < REWARD_BALANCE_THRESHOLD:
         low_balance_should_alert = count_alert_interval(transaction_event)
         print("low balance should restart: ", low_balance_should_alert)
         if low_balance_should_alert is True:
             findings.append(SuspiciousContractFindings.rewarder_forta_erc20_balance_drop_below_threshold(f'{REWARDER_TOTAL_ERC20_BALANCE} FT'))
+        
+        # special case, if there's an unstake event then we also fire event without waiting for the interval
+        if len(unstake_findings) > 0:
+            findings.append(unstake_findings)
 
     # reset current handling block number to the latest block after processing everything
     if CURRENT_HANDLING_BLOCK_NUMBER != transaction_event.block.number:

@@ -179,4 +179,4 @@ class TestSuspiciousContractAgent:
         # second case, successful
         findings = agent.notify_rewarder_erc20_balance_below_threshold(w3, tx_event)
 
-        assert len(findings) == 1
+        assert len(findings) == 2
