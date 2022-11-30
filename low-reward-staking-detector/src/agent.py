@@ -114,7 +114,7 @@ def count_alert_interval(transaction_event: forta_agent.transaction_event.Transa
 
     print("current alert block interval: ", ALERT_BLOCK_INTERVAL)
     print("current handling block number: ", CURRENT_HANDLING_BLOCK_NUMBER)
-    print("transaction event block number: ", transaction_event.block.number)
+    print("transaction event block number in count alert interval: ", transaction_event.block.number)
 
     if CURRENT_HANDLING_BLOCK_NUMBER == transaction_event.block.number:
         return False
