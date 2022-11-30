@@ -6,7 +6,8 @@ from web3 import Web3
 from web3.contract import Contract
 
 from src.constants import (
-    UNSTAKE_EVENT_ABI,STAKING_CONTRACT_ADDRESS,FAKE_FORTA_ERC20_ADDRESS,REWARD_BALANCE_THRESHOLD,FORTA_ERC20_CONTRACT_ABI, REWARDER_ADDRESS,TRANSFER_EVENT_ABI,ZERO_ADDRESS
+    UNSTAKE_EVENT_ABI,STAKING_CONTRACT_ADDRESS,FAKE_FORTA_ERC20_ADDRESS,REWARD_BALANCE_THRESHOLD,FORTA_ERC20_CONTRACT_ABI, REWARDER_ADDRESS,TRANSFER_EVENT_ABI,ZERO_ADDRESS,
+    ALERT_BLOCK_INTERVAL_CONSTANT
 )
 from src.findings import SuspiciousContractFindings
 
@@ -14,6 +15,8 @@ web3 = Web3(Web3.HTTPProvider(get_json_rpc_url()))
 
 REWARDER_TOTAL_ERC20_BALANCE = 0
 CURRENT_HANDLING_BLOCK_NUMBER = 0
+ALERT_BLOCK_INTERVAL = 0
+HAS_FIRED_ALERT = False
 
 class MyEncoder(json.JSONEncoder):
         def default(self, o):
@@ -27,8 +30,12 @@ def initialize():
     """
     global REWARDER_TOTAL_ERC20_BALANCE
     global CURRENT_HANDLING_BLOCK_NUMBER
+    global ALERT_BLOCK_INTERVAL
+    global HAS_FIRED_ALERT
     REWARDER_TOTAL_ERC20_BALANCE = 0
     CURRENT_HANDLING_BLOCK_NUMBER = 0
+    ALERT_BLOCK_INTERVAL = 0
+    HAS_FIRED_ALERT = False
 
 
 def get_fake_forta_erc20_token_contract(w3: Web3) -> Contract:
@@ -126,6 +133,25 @@ def unexpected_transfer_rewarder(w3: Web3, transaction_event: forta_agent.transa
     
     return findings
 
+def count_alert_interval(transaction_event: forta_agent.transaction_event.TransactionEvent) -> bool:
+    global ALERT_BLOCK_INTERVAL
+    global CURRENT_HANDLING_BLOCK_NUMBER
+
+    if CURRENT_HANDLING_BLOCK_NUMBER == transaction_event.block.number:
+        return False
+
+    CURRENT_HANDLING_BLOCK_NUMBER = transaction_event.block.number
+
+    if ALERT_BLOCK_INTERVAL == 0:
+        ALERT_BLOCK_INTERVAL += 1
+        return True
+
+    ALERT_BLOCK_INTERVAL += 1
+    if ALERT_BLOCK_INTERVAL < ALERT_BLOCK_INTERVAL_CONSTANT:
+        return False
+    ALERT_BLOCK_INTERVAL = 0
+    return False
+
 
 def notify_rewarder_erc20_balance_below_threshold(w3: Web3, transaction_event: forta_agent.transaction_event.TransactionEvent) -> list:
 
@@ -141,7 +167,9 @@ def notify_rewarder_erc20_balance_below_threshold(w3: Web3, transaction_event: f
     findings = unexpected_transfer_rewarder(w3, transaction_event)
 
     if REWARDER_TOTAL_ERC20_BALANCE < REWARD_BALANCE_THRESHOLD:
-        findings.append(SuspiciousContractFindings.rewarder_forta_erc20_balance_drop_below_threshold(f'{REWARDER_TOTAL_ERC20_BALANCE} FT'))
+        low_balance_should_alert = count_alert_interval(transaction_event)
+        if low_balance_should_alert is True:
+            findings.append(SuspiciousContractFindings.rewarder_forta_erc20_balance_drop_below_threshold(f'{REWARDER_TOTAL_ERC20_BALANCE} FT'))
     return findings
 
 
