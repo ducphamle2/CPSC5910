@@ -4,6 +4,19 @@
 
 This detection bot detects when the ERC20 balance of a reward token from a rewarder falls below a certain threshold. It is triggered when the stakers unstake and claim their rewards. This is just a simple POC with basic contracts, but it can be expanded further.
 
+STAKING_CONTRACT_ADDRESS = '0x0a04F8295701F52ee6ec6238424B7A144270E8d4'
+
+REWARDER_ADDRESS = '0x16FF312A4d4171a68a7e06c12916015D30235251'
+
+STAKER_ADDRESS = '0xE05cCbcbCb088D8Ae063401249366348cf0eD6C4'
+
+FAKE_FORTA_ERC20_ADDRESS = '0x4788A901dE8Cb3B1d7461DA4211ef8445bd6FdFA'
+
+REWARD_BALANCE_THRESHOLD = 9999900
+
+# re-fire the event after 5000 blocks if the balance is still below the threshold
+ALERT_BLOCK_INTERVAL_CONSTANT = 5000
+
 ## Supported Chains
 
 - Polygon
